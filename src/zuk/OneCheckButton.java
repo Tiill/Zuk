@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,10 +35,10 @@ public class OneCheckButton extends javax.swing.JButton {
             try {
                 boolean pstatusp = Zuk.pingServer(InetAddress.getByName(WorkThread.hostForPing), 53, 1000);
                 if (pstatusp) {
-                    Gui.mainframe.getBackGround().setImage(ImagePanel.estInternetKartinka);
+                    Gui.mainframe.getfont().setIcon(new ImageIcon(getClass().getResource("/рес/ZukDa.gif")));
                     Gui.mainframe.repaint();
                 } else {
-                    Gui.mainframe.getBackGround().setImage(ImagePanel.netInternetKartinka);
+                    Gui.mainframe.getfont().setIcon(new ImageIcon(getClass().getResource("/рес/ZukNet.gif")));
                     Gui.mainframe.repaint();
                 }
             } catch (UnknownHostException ey) {

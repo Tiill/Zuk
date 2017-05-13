@@ -6,10 +6,14 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.UnknownHostException;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,16 +23,18 @@ import javax.swing.JOptionPane;
  */
 public class MainFrame extends JFrame {
     private final StartStopButton ststbutton;
-    private final ImagePanel background;
+    private final JLabel font;
     
 
     /**
     * конструктор вызывает метод изменения имени.
     */
-    public MainFrame() throws HeadlessException {
+    public MainFrame() throws HeadlessException, MalformedURLException {
         
-//        Добавление фона
-        background = new ImagePanel(ImagePanel.privetKartinka); setContentPane(background);
+        
+        font = new JLabel(new ImageIcon(getClass().getResource("/рес/ZukOsnov.jpg")));
+        font.setBounds(0, 0, 400, 400);
+        this.getContentPane().add(font);
         
 //        Свойства главного окна
                 doName();
@@ -42,18 +48,18 @@ public class MainFrame extends JFrame {
                 setIconImage(new ImageIcon(this.getClass().getResource("/рес/ZukIcon.png")).getImage());
                 
 //        Добавление кнопки разовой проверки
-                OneCheckButton button1 = new OneCheckButton();
-                button1.setBounds(0, 292, 250, 40);
-                button1.setFont(new Font("Serif", Font.BOLD, 15));
-                button1.setFocusPainted(false);
-                add(button1);
+//                OneCheckButton button1 = new OneCheckButton();
+//                button1.setBounds(0, 292, 250, 40);
+//                button1.setFont(new Font("Serif", Font.BOLD, 15));
+//                button1.setFocusPainted(false);
+//                font.add(button1);
 
 //        Добавление кнопки СтартСтоп
                 ststbutton = new StartStopButton();
                 ststbutton.setBounds(0, 332, 250, 40);
                 ststbutton.setFont(new Font("Serif", Font.BOLD, 15));
                 ststbutton.setFocusPainted(false);
-                add(ststbutton);
+                font.add(ststbutton);
 
 //        Добавление кнопки справка и действия
                 JButton spravka = new JButton(new ImageIcon(this.getClass().getResource("/рес/SpravkaIcon.png")));
@@ -70,7 +76,7 @@ public class MainFrame extends JFrame {
                                 + "Когда доступ в интернет появиться Зук известит вас музыкой.", "Справка. Версия " + Zuk.getVersion(), javax.swing.JOptionPane.INFORMATION_MESSAGE);
                     }
                 });
-                add(spravka);
+                font.add(spravka);
                 
 //        Добавление кнопки обновления
                 UpdateButton buttonupdate = new UpdateButton(this);
@@ -79,7 +85,7 @@ public class MainFrame extends JFrame {
                 buttonupdate.setBounds(354, 292, 40, 40);
                 buttonupdate.setFont(new Font("Serif", Font.BOLD, 15));
                 buttonupdate.setFocusPainted(false);
-                add(buttonupdate);
+                font.add(buttonupdate);
                 
 
 //        Делает окно видимым
@@ -115,8 +121,9 @@ public class MainFrame extends JFrame {
         return ststbutton;
     }
 
-    public ImagePanel getBackGround() {
-        return background;
+
+    public JLabel getfont() {
+        return font;
     }
     
     

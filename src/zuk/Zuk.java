@@ -1,9 +1,13 @@
 package zuk;
 
+import java.awt.HeadlessException;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.MalformedURLException;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -46,8 +50,14 @@ public final class Zuk {
                 } catch (UnsupportedLookAndFeelException ex) {
                     JOptionPane.showMessageDialog(Gui.mainframe, "Проблема с Look and Feel.", "Ошибка!", javax.swing.JOptionPane.ERROR_MESSAGE);
                 }
-//                MainFrame.setDefaultLookAndFeelDecorated(true);
-                new Gui();
+                try {
+                    //                MainFrame.setDefaultLookAndFeelDecorated(true);
+                    new Gui();
+                } catch (HeadlessException ex) {
+                    Logger.getLogger(Zuk.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(Zuk.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

@@ -1,5 +1,8 @@
 package zuk;
 
+import java.awt.HeadlessException;
+import java.net.MalformedURLException;
+
 /**
  *
  * @author Тиилл
@@ -10,7 +13,7 @@ public class Gui {
     static WorkThread mainthread;
     static boolean zhdat;
 
-    public Gui() {
+    public Gui() throws HeadlessException, MalformedURLException {
         mainframe = new MainFrame();
     }
 

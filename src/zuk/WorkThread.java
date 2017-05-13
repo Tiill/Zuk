@@ -2,6 +2,8 @@ package zuk;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**Поток с воспроизведением звука.
@@ -46,7 +48,7 @@ class WorkThread extends Thread implements Runnable {
     @Override
     public void run() {
 //        Зависимости
-        ImagePanel background = Gui.mainframe.getBackGround();
+        JLabel font = Gui.mainframe.getfont();
         StartStopButton ststbutton = Gui.mainframe.getStStButton();
         MainFrame mainframe = Gui.mainframe;
         
@@ -71,13 +73,13 @@ class WorkThread extends Thread implements Runnable {
                             music.play(true);
                         }
                     }
-                    background.setImage(ImagePanel.estInternetKartinka);
+                    font.setIcon(new ImageIcon(getClass().getResource("/рес/ZukDa.gif")));
                     mainframe.repaint();
                     Thread.sleep(WorkThread.vremjaProstoja);
                 } else {
                     if(music.isPlaying())music.stop();
-                    if(Gui.zhdat == true) background.setImage(ImagePanel.ozhidanie);
-                    else background.setImage(ImagePanel.netInternetKartinka);
+                    if(Gui.zhdat == true) font.setIcon(new ImageIcon(getClass().getResource("/рес/ZukWait.gif")));
+                    else font.setIcon(new ImageIcon(getClass().getResource("/рес/ZukNet.gif")));
                     mainframe.repaint();
                     Thread.sleep(WorkThread.vremjaProstoja);
                 }
