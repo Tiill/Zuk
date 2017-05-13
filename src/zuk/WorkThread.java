@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 class WorkThread extends Thread implements Runnable {
     static final private String zvukFile = "/рес/Overlord2-OST.wav";
     static final public String hostForPing = "8.8.8.8";
-    static final private int vremjaProstoja = 5000;
+    static final private int vremjaProstoja = 1000;
     static final private int vremjaOzhidanija = 2000;
 
 
@@ -34,6 +34,8 @@ class WorkThread extends Thread implements Runnable {
         music = new Sound(WorkThread.zvukFile);
         
         markerstopthread = threadstatus.startPotok;
+        
+        this.setDaemon(true);
     }
 
     /**
@@ -53,23 +55,6 @@ class WorkThread extends Thread implements Runnable {
             return;
         }
 
-//        проверка соединения и реакция на него
-        try {
-            boolean pstatusp = Zuk.pingServer(InetAddress.getByName(WorkThread.hostForPing), 53, 1000);
-            if (pstatusp) {
-                background.setImage(ImagePanel.estInternetKartinka);
-                ststbutton.markerButton = StartStopButton.statusbutton.Nachat;
-                ststbutton.setText("Начать отслеживание");
-                mainframe.repaint();
-                return;
-            }  else {
-                    background.setImage(ImagePanel.ozhidanie);
-                    mainframe.repaint();
-                }
-        } catch (UnknownHostException ey) {
-            JOptionPane.showMessageDialog(null, ey, "Внимание! Проблема с Host", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
-
 //        цикл проверки
         while (true) {
 //        проверка маркера завершения
@@ -81,12 +66,18 @@ class WorkThread extends Thread implements Runnable {
             try {
                 boolean pstatus = Zuk.pingServer(InetAddress.getByName(WorkThread.hostForPing), 53, vremjaOzhidanija);
                 if (pstatus) {
+                    if (Gui.zhdat == true) {
+                        if (!music.isPlaying()){
+                            music.play(true);
+                        }
+                    }
                     background.setImage(ImagePanel.estInternetKartinka);
                     mainframe.repaint();
-                    music.play(true);
-                    return;
+                    Thread.sleep(WorkThread.vremjaProstoja);
                 } else {
-                    background.setImage(ImagePanel.ozhidanie);
+                    if(music.isPlaying())music.stop();
+                    if(Gui.zhdat == true) background.setImage(ImagePanel.ozhidanie);
+                    else background.setImage(ImagePanel.netInternetKartinka);
                     mainframe.repaint();
                     Thread.sleep(WorkThread.vremjaProstoja);
                 }

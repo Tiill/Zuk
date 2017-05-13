@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 public class MainFrame extends JFrame {
     private final StartStopButton ststbutton;
     private final ImagePanel background;
+    
 
     /**
     * конструктор вызывает метод изменения имени.
@@ -79,9 +80,14 @@ public class MainFrame extends JFrame {
                 buttonupdate.setFont(new Font("Serif", Font.BOLD, 15));
                 buttonupdate.setFocusPainted(false);
                 add(buttonupdate);
+                
 
 //        Делает окно видимым
                 setVisible(true);
+
+                Gui.mainthread = new WorkThread();
+                Gui.mainthread.markerstopthread = WorkThread.threadstatus.startPotok;
+                Gui.mainthread.start();
             }
     
     

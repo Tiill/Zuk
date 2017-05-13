@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 /**
  * Кнопка для Зук фрейма меняющая поведение после нажатия. Меняется с "Начать
- * отслеживание" на "Остановить отслеживание".
+ * ожидание" на "Остановить ожидание".
  *
  * @author Тиилл
  */
@@ -18,7 +18,7 @@ public class StartStopButton extends javax.swing.JButton {
      */
     public StartStopButton() {
         super();
-        this.setText("Начать отслеживание");
+        this.setText("Начать ожидание");
         this.addActionListener(new actionListenerForThisButton(this));
         this.markerButton = statusbutton.Nachat;
     }
@@ -54,23 +54,16 @@ public class StartStopButton extends javax.swing.JButton {
         public void actionPerformed(ActionEvent e) {
 
             if (button.markerButton == StartStopButton.statusbutton.Nachat) {
-                setText("Остановить отслеживание");
+                setText("Остановить ожидание");
 
-                ////////////////////////////////////////////////////////////
-                Gui.mainthread = new WorkThread();
-                Gui.mainthread.markerstopthread = WorkThread.threadstatus.startPotok;
-                Gui.mainthread.start();
-                    ////////////////////////////////////////////////////////////
+                Gui.zhdat=true;
 
                 button.markerButton = StartStopButton.statusbutton.Ostanovit;
             } else {
-                setText("Начать отслеживание");
+                setText("Начать ожидание");
 
-                ////////////////////////////////////////////////////////////
-                Gui.mainthread.markerstopthread = WorkThread.threadstatus.stopPotok;
-                Gui.mainthread.interrupt();
                 Gui.mainthread.stopMusic();
-                    ////////////////////////////////////////////////////////////
+                Gui.zhdat=false;
 
                 button.markerButton = StartStopButton.statusbutton.Nachat;
             }
